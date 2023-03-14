@@ -1,0 +1,10 @@
+{
+  "expo": {
+    "name": "desafio-grupo-seven",
+    "slug": "desafio-grupo-seven",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
