@@ -1,16 +1,25 @@
 import React from 'react';
-import { Text, TouchableOpacityProps } from 'react-native';
+import { TouchableOpacityProps } from 'react-native';
 
 import * as Sty from './styles';
 
 type Props = {
   title: string;
+  titleColor?: 'white' | 'default';
+  titleBold?: boolean;
 } & TouchableOpacityProps;
 
-export function Button({ title, ...rest }: Props) {
+export function Button({
+  title,
+  titleColor = 'default',
+  titleBold = false,
+  ...rest
+}: Props) {
   return (
     <Sty.Container {...rest}>
-      <Sty.TextButton>{title}</Sty.TextButton>
+      <Sty.TextButton titleColor={titleColor} titleBold={titleBold}>
+        {title}
+      </Sty.TextButton>
     </Sty.Container>
   );
 }

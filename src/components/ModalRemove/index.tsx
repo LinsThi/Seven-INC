@@ -1,5 +1,6 @@
 import React, { useCallback } from 'react';
 import { Modal } from 'react-native';
+import { useTheme } from 'styled-components/native';
 import { EmployeesProps } from '~/DTOS/employees';
 
 import * as Sty from './styles';
@@ -17,6 +18,8 @@ export function ModalRemove({
   visibleModal,
   handleRemoveEmployee,
 }: Props) {
+  const { COLORS } = useTheme();
+
   const removeEmployee = useCallback(() => {
     handleRemoveEmployee(employeeInfo);
 
@@ -45,11 +48,19 @@ export function ModalRemove({
           <Sty.ContainerButton>
             <Sty.ButtonModal
               title="Cancelar"
-              style={{ backgroundColor: 'red' }}
+              style={{ backgroundColor: COLORS.BG_BUTTON_CANCEL }}
+              titleColor="white"
+              titleBold
               onPress={handleChangeVisibleModal}
             />
 
-            <Sty.ButtonModal title="Confirmar" onPress={removeEmployee} />
+            <Sty.ButtonModal
+              title="Confirmar"
+              style={{ backgroundColor: COLORS.BG_BUTTON_CONFIRM }}
+              titleBold
+              titleColor="white"
+              onPress={removeEmployee}
+            />
           </Sty.ContainerButton>
         </Sty.Content>
       </Sty.Container>
