@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import { LayoutAnimation, Platform, UIManager } from 'react-native';
 import { useTheme } from 'styled-components/native';
 import { EmployeesProps } from '~/DTOS/employees';
@@ -27,6 +28,11 @@ export function CardEmployee({
 }: Props) {
   const { item } = employeeInfo;
   const { COLORS } = useTheme();
+  const { navigate } = useNavigation();
+
+  const handleNavigateEditEmployeeScreen = () => {
+    navigate('EditEmployee' as never);
+  };
 
   LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
 
@@ -69,7 +75,7 @@ export function CardEmployee({
             </Sty.TextInfoMore>
 
             <Sty.ContainerButtons>
-              <Sty.Button onPress={handleChangeVisibleModal}>
+              <Sty.Button onPress={handleNavigateEditEmployeeScreen}>
                 <Sty.Icon name="pencil-box" size={30} color="green" />
               </Sty.Button>
 
