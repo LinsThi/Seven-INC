@@ -42,7 +42,7 @@ export function ModalRemove({
 
           <Sty.TextInfo>
             Você confirmar que deseja remover o funcionário{' '}
-            <Sty.TextBold>{employeeInfo.name}</Sty.TextBold>?
+            <Sty.TextBold>{employeeInfo.name}</Sty.TextBold> ?
           </Sty.TextInfo>
 
           <Sty.ContainerButton>
