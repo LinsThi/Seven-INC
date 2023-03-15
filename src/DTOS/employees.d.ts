@@ -7,5 +7,4 @@ export type EmployeesProps = {
   birth_date: string;
   salary: string;
   created_at: string;
-  image: string;
 };
