@@ -1,50 +1,68 @@
 import React, { useCallback, useState } from 'react';
 import { EmployeesProps } from '~/DTOS/employees';
-import MockEmployees from '~/mock/employees';
 import { CardEmployee } from '../CardEmployee';
+import { ModalRemove } from '../ModalRemove';
 
 import * as Sty from './styles';
 
-export type FlatListProps = {
-  index: number;
+export type ItemListEmployeeProps = {
   item: EmployeesProps;
 };
 
-export function ListEmployees() {
-  const [expandedItems, setExpandedItems] = useState<number[]>([]);
+type ListEmployessProps = {
+  listRender: EmployeesProps[];
+  handleRemoveEmployee: (employeeInfo: EmployeesProps) => void;
+};
+
+export function ListEmployees({
+  listRender,
+  handleRemoveEmployee,
+}: ListEmployessProps) {
+  const [expandedItem, setExpandedItem] = useState<EmployeesProps>(
+    {} as EmployeesProps,
+  );
+  const [visibleModal, setVisibleModal] = useState(false);
 
   const handleSetExpandedItems = useCallback(
-    (idItem: number) => {
-      if (!verifyIfItemExpanded(idItem)) {
-        return setExpandedItems(prev => [...prev, idItem]);
+    (selectedEmployee: EmployeesProps) => {
+      if (selectedEmployee.document === expandedItem.document) {
+        return setExpandedItem({} as EmployeesProps);
       }
 
-      const indexInArray = expandedItems.findIndex(
-        currentIndex => currentIndex === idItem,
-      );
-
-      const newArrayExpandedItems = [...expandedItems];
-      newArrayExpandedItems.splice(indexInArray, 1);
-
-      return setExpandedItems(newArrayExpandedItems);
+      setExpandedItem(selectedEmployee);
     },
-    [expandedItems],
+    [expandedItem],
   );
 
-  const verifyIfItemExpanded = (idItem: number) => {
-    return expandedItems.some(currentItem => currentItem === idItem);
+  const verifyIfItemExpanded = useCallback(
+    (selectedEmployee: EmployeesProps) => {
+      return expandedItem.document === selectedEmployee.document;
+    },
+    [expandedItem],
+  );
+
+  const handleChangeVisibleModal = () => {
+    setVisibleModal(prev => !prev);
   };
 
   return (
     <Sty.Container>
+      <ModalRemove
+        visibleModal={visibleModal}
+        handleChangeVisibleModal={handleChangeVisibleModal}
+        employeeInfo={expandedItem}
+        handleRemoveEmployee={handleRemoveEmployee}
+      />
+
       <Sty.Flatlist
-        data={MockEmployees}
-        extraData={MockEmployees}
-        renderItem={({ index, item }) => (
+        data={listRender}
+        extraData={listRender}
+        renderItem={({ item }) => (
           <CardEmployee
-            employeeInfo={{ index, item }}
+            employeeInfo={{ item }}
             handleSetExpandedItems={handleSetExpandedItems}
-            isExpanded={verifyIfItemExpanded(index)}
+            isExpanded={verifyIfItemExpanded(item)}
+            handleChangeVisibleModal={handleChangeVisibleModal}
           />
         )}
         keyExtractor={(_, index) => index.toString()}

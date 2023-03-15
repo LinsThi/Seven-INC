@@ -1,9 +1,9 @@
-import { View, ViewProps } from 'react-native';
+import { TextInput, TextInputProps } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import styled from 'styled-components/native';
 import MaterialComunityIcon, { IconProps } from '../IconMaterialComunity';
 
-export const Container = styled(View)`
+export const Container = styled.View`
   width: 100%;
   background-color: ${({ theme }) => theme.COLORS.GRAY};
   padding: ${RFValue(10)}px;
@@ -15,7 +15,7 @@ export const Icon = styled(MaterialComunityIcon).attrs<IconProps>(
   ({ name, color, size }) => ({ name, color, size }),
 )``;
 
-export const Input = styled.TextInput.attrs<ViewProps>(({ theme }) => ({
+export const Input = styled(TextInput).attrs<TextInputProps>(({ theme }) => ({
   placeholderTextColor: theme.COLORS.LIGHT_GRAY,
 }))`
   flex: 1;

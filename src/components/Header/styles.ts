@@ -10,9 +10,11 @@ export const Container = styled.View`
   justify-content: space-between;
 `;
 
-export const Search = styled(SearchInput)`
-  width: 85%;
-`;
+export const ContainerSearch = styled.View``;
+
+export const Search = styled(SearchInput)``;
+
+export const Button = styled.TouchableOpacity``;
 
 export const IconHeader = styled(MaterialComunityIcon).attrs<IconProps>(
   ({ name, color, size }) => ({ name, color: color, size: RFValue(size) }),

@@ -4,6 +4,11 @@ import styled from 'styled-components/native';
 import { EmployeesProps } from '~/DTOS/employees';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { vs, ms } from 'react-native-size-matters';
+import MaterialComunityIcon, { IconProps } from '../IconMaterialComunity';
+
+type ContainerItemProps = {
+  isExpanded: boolean;
+};
 
 export const Container = styled.View`
   flex: 1;
@@ -11,7 +16,8 @@ export const Container = styled.View`
   align-items: center;
 `;
 
-export const ContainerItem = styled.TouchableOpacity`
+export const ContainerItem = styled.TouchableOpacity<ContainerItemProps>`
+  height: ${({ isExpanded }) => (isExpanded ? vs(195) : vs(96))}px;
   background-color: #dcdcdc;
   margin-bottom: ${RFValue(15)}px;
   padding: ${vs(15)}px ${ms(5)}px;
@@ -20,14 +26,21 @@ export const ContainerItem = styled.TouchableOpacity`
   flex-direction: row;
 `;
 
-export const ItemInfo = styled.View`
-  margin-left: ${ms(10)}px;
+export const ContainerEmployeeInfo = styled.View`
+  flex: 1;
+  justify-content: space-between;
+  flex-direction: row;
 `;
 
-export const ImageEmployee = styled.Image`
-  width: ${RFValue(55)}px;
-  height: ${RFValue(55)}px;
-  border-radius: ${RFValue(100)}px;
+export const ContainerButtons = styled.View`
+  flex-direction: row;
+  justify-content: space-evenly;
+  margin-top: ${vs(10)}px;
+`;
+
+export const ItemInfo = styled.View`
+  flex: 1;
+  margin-left: ${ms(10)}px;
 `;
 
 export const NameEmployee = styled.Text`
@@ -43,6 +56,16 @@ export const TextInfoMore = styled.Text`
   font-size: ${RFValue(18)}px;
   color: ${({ theme }) => theme.COLORS.GRAY};
 `;
+
+export const HighlightedText = styled.Text`
+  font-weight: bold;
+`;
+
+export const Icon = styled(MaterialComunityIcon).attrs<IconProps>(
+  ({ name, color, size }) => ({ name, color: color, size: RFValue(size) }),
+)``;
+
+export const Button = styled.TouchableOpacity``;
 
 export const Flatlist = styled.FlatList`
   width: 100%;
