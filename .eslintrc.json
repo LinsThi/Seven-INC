@@ -4,7 +4,7 @@
   },
   "extends": [
     "plugin:react/recommended",
-    "standard-with-typescript",
+    "airbnb",
     "prettier",
     "plugin:@typescript-eslint/recommended",
     "plugin:prettier/recommended"
@@ -19,6 +19,7 @@
   },
   "plugins": [
     "react",
+    "react-hooks",
     "@typescript-eslint",
     "prettier",
     "eslint-plugin-import-helpers"
@@ -27,6 +28,7 @@
     "prettier/prettier": "off",
     "import/prefer-default-export": "off",
     "react/jsx-filename-extension": [1, { "extensions": [".tsx"] }],
+    "react-hooks/exhaustive-deps": "warn",
     "import/extensions": [
       "error",
       "ignorePackages",
