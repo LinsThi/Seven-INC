@@ -16,19 +16,15 @@ export const Container = styled.View`
 `;
 
 export const ContainerLabel = styled(Animated.View)<InputTextProps>`
-  background-color: ${({ isFocused, isEmpty, theme }) =>
-    isFocused || isEmpty ? 'transparent' : theme.COLORS.WHITE};
   position: absolute;
   z-index: 1;
   margin-left: ${({ isFocused, isEmpty }) =>
-    isFocused || isEmpty ? ms(-5) : ms(10)}px;
-  padding: ${vs(2)}px ${ms(3)}px 0;
-  padding: ${({ isFocused, isEmpty }) =>
-    isFocused || isEmpty ? `${vs(2)}px ${ms(3)}px 0` : `0 ${ms(3)}px`};
+    isFocused || isEmpty ? ms(5) : ms(10)}px;
 `;
 
-export const TextLabel = styled.Text<InputTextProps>`
-  font-size: ${RFValue(20)}px;
+export const TextLabel = styled(Animated.Text)<InputTextProps>`
+  font-size: ${({ isFocused, isEmpty }) =>
+    isFocused || isEmpty ? RFValue(16) : RFValue(20)}px;
   font-weight: bold;
   color: ${({ theme }) => theme.COLORS.COLOR_LABEL_INPUT};
 

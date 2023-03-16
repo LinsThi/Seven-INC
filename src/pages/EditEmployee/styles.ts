@@ -21,7 +21,7 @@ export const ContainerHeader = styled.View`
 export const Content = styled.ScrollView.attrs({
   showsVerticalScrollIndicator: false,
 })`
-  padding-top: ${vs(20)}px;
+  margin-top: ${vs(20)}px;
 `;
 
 export const Form = styled.View`

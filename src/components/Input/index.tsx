@@ -34,15 +34,9 @@ export function Input({ label, isEmpty = true, ...rest }: InputProps) {
         style={{
           transform: [
             {
-              scale: focusAnimation.interpolate({
-                inputRange: [0, 1],
-                outputRange: [1, 0.8],
-              }),
-            },
-            {
               translateY: focusAnimation.interpolate({
                 inputRange: [0, 1],
-                outputRange: [vs(33), vs(-12)],
+                outputRange: [vs(33), vs(-5)],
               }),
             },
           ],
@@ -58,6 +52,7 @@ export function Input({ label, isEmpty = true, ...rest }: InputProps) {
         selectionColor={COLORS.RED}
         isFocused={isFocused}
         isEmpty={isEmpty}
+        cursorColor={COLORS.BLACK}
         {...rest}
       />
     </Sty.Container>
