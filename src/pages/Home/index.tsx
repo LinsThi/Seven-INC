@@ -12,7 +12,7 @@ export function Home() {
 
   const filteredData = searchValue
     ? listRender.filter(currrentEmployee =>
-        currrentEmployee.name.toLowerCase().includes(searchValue),
+        currrentEmployee.name.toLowerCase().includes(searchValue.toLowerCase()),
       )
     : listRender;
 
