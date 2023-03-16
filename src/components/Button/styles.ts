@@ -15,7 +15,7 @@ export const Container = styled(TouchableOpacity)`
   padding: ${RFValue(10)}px 0;
   border-radius: ${RFValue(15)}px;
 
-  background-color: aqua;
+  background-color: ${({ theme }) => theme.COLORS.BLUE};
 `;
 
 export const TextButton = styled.Text<ButtonTextProps>`
