@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { useWindowDimensions } from 'react-native';
 import { useTheme } from 'styled-components/native';
@@ -14,11 +15,16 @@ export function Header({
   handleChangeValueInputSearch,
 }: Props) {
   const { COLORS } = useTheme();
+  const { navigate } = useNavigation();
 
   function useIsLandscape() {
     const { height, width } = useWindowDimensions();
     return width > height;
   }
+
+  const handleNavigateToEditEmployeeScreen = () => {
+    navigate('EditEmployee');
+  };
 
   return (
     <Sty.Container>
@@ -31,7 +37,7 @@ export function Header({
         />
       </Sty.ContainerSearch>
 
-      <Sty.Button>
+      <Sty.Button onPress={handleNavigateToEditEmployeeScreen}>
         <Sty.IconHeader name="plus-box" size={45} color={COLORS.GREEN} />
       </Sty.Button>
     </Sty.Container>

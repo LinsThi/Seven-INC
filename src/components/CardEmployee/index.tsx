@@ -1,7 +1,9 @@
 import { useNavigation } from '@react-navigation/native';
 import { LayoutAnimation, Platform, UIManager } from 'react-native';
 import { useTheme } from 'styled-components/native';
+
 import { EmployeesProps } from '~/DTOS/employees';
+
 import { ItemListEmployeeProps } from '../ListEmployees';
 
 import * as Sty from './styles';
@@ -31,7 +33,7 @@ export function CardEmployee({
   const { navigate } = useNavigation();
 
   const handleNavigateEditEmployeeScreen = () => {
-    navigate('EditEmployee' as never);
+    navigate('EditEmployee', { currentEmployee: employeeInfo.item });
   };
 
   LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);

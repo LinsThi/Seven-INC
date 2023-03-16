@@ -1,5 +1,7 @@
 import React, { useCallback, useState } from 'react';
+
 import { EmployeesProps } from '~/DTOS/employees';
+
 import { CardEmployee } from '../CardEmployee';
 import { ModalRemove } from '../ModalRemove';
 
@@ -29,7 +31,7 @@ export function ListEmployees({
         return setExpandedItem({} as EmployeesProps);
       }
 
-      setExpandedItem(selectedEmployee);
+      return setExpandedItem(selectedEmployee);
     },
     [expandedItem],
   );

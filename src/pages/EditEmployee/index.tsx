@@ -1,23 +1,98 @@
-import { useNavigation } from '@react-navigation/native';
-import React, { useState } from 'react';
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
+import React, { useCallback, useState } from 'react';
 import { useTheme } from 'styled-components/native';
-import { Button } from '~/components/Button';
+
 import { Input } from '~/components/Input';
+
+import { EmployeesProps } from '~/DTOS/employees';
+import MockEmployees from '~/mock/employees';
 import { maskDate, maskCPF, maskPhoneNumber } from '~/utils/maskInput';
 
 import * as Sty from './styles';
 
+type PropsParams = RouteProp<
+  { params: { currentEmployee?: EmployeesProps } },
+  'params'
+>;
+
 export function EditEmployee() {
   const { COLORS } = useTheme();
-  const { goBack } = useNavigation();
+  const { goBack, navigate } = useNavigation();
 
-  const [name, setName] = useState('');
-  const [document, setDocument] = useState('');
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
-  const [birthDate, setBirthDate] = useState('');
-  const [salary, setSalary] = useState('');
-  const [createdAt, setCreatedAt] = useState('');
+  const route = useRoute<PropsParams>();
+  const { params } = route;
+
+  const [name, setName] = useState(params?.currentEmployee?.name || '');
+  const [document, setDocument] = useState(
+    params?.currentEmployee?.document || '',
+  );
+  const [email, setEmail] = useState(params?.currentEmployee?.email || '');
+  const [phone, setPhone] = useState(params?.currentEmployee?.phone || '');
+  const [birthDate, setBirthDate] = useState(
+    params?.currentEmployee?.birth_date || '',
+  );
+  const [salary, setSalary] = useState(params?.currentEmployee?.salary || '');
+  const [createdAt, setCreatedAt] = useState(
+    params?.currentEmployee?.created_at || '',
+  );
+
+  const handleAddEmployee = useCallback(() => {
+    const newEmployeeInfo: EmployeesProps = {
+      id: Number(params?.currentEmployee?.id),
+      name,
+      document,
+      email,
+      phone,
+      birth_date: birthDate,
+      salary,
+      created_at: createdAt,
+    };
+
+    MockEmployees.push(newEmployeeInfo);
+    navigate('Home');
+  }, [
+    params?.currentEmployee?.id,
+    name,
+    document,
+    email,
+    phone,
+    birthDate,
+    salary,
+    createdAt,
+    navigate,
+  ]);
+
+  const handleUpdateEmployee = useCallback(() => {
+    const idExployee = Number(params.currentEmployee?.id);
+
+    const updatedEmployeeInfo: EmployeesProps = {
+      id: idExployee,
+      name,
+      document,
+      email,
+      phone,
+      birth_date: birthDate,
+      salary,
+      created_at: createdAt,
+    };
+
+    const indextUpdate = MockEmployees.findIndex(
+      currentEmployee => currentEmployee.id === idExployee,
+    );
+
+    MockEmployees[indextUpdate] = updatedEmployeeInfo;
+    navigate('Home');
+  }, [
+    params?.currentEmployee?.id,
+    name,
+    document,
+    email,
+    phone,
+    birthDate,
+    salary,
+    createdAt,
+    navigate,
+  ]);
 
   return (
     <Sty.Container>
@@ -93,7 +168,16 @@ export function EditEmployee() {
             />
           </Sty.TwiceInputs>
 
-          <Sty.ButtonConfirm title="Confirmar" titleColor="white" titleBold />
+          <Sty.ButtonConfirm
+            title={params?.currentEmployee ? 'Atualizar' : 'Cadastrar'}
+            titleColor="white"
+            titleBold
+            onPress={
+              params?.currentEmployee
+                ? () => handleUpdateEmployee()
+                : () => handleAddEmployee()
+            }
+          />
         </Sty.Form>
       </Sty.Content>
     </Sty.Container>

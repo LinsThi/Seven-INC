@@ -1,6 +1,9 @@
-import React, { useCallback, useState } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
+import React, { useCallback, useMemo, useState } from 'react';
+
 import { Header } from '~/components/Header';
 import { ListEmployees } from '~/components/ListEmployees';
+
 import { EmployeesProps } from '~/DTOS/employees';
 import MockEmployees from '~/mock/employees';
 
@@ -10,11 +13,15 @@ export function Home() {
   const [listRender, setListRender] = useState(MockEmployees);
   const [searchValue, setSearchValue] = useState('');
 
-  const filteredData = searchValue
-    ? listRender.filter(currrentEmployee =>
-        currrentEmployee.name.toLowerCase().includes(searchValue.toLowerCase()),
-      )
-    : listRender;
+  const filteredData = useMemo(() => {
+    return searchValue
+      ? listRender.filter(currrentEmployee =>
+          currrentEmployee.name
+            .toLowerCase()
+            .includes(searchValue.toLowerCase()),
+        )
+      : listRender;
+  }, [listRender, searchValue]);
 
   const handleChangeValueInput = useCallback((value: string) => {
     setSearchValue(value);
@@ -33,6 +40,12 @@ export function Home() {
       setListRender(dataArray);
     },
     [listRender],
+  );
+
+  useFocusEffect(
+    useCallback(() => {
+      setListRender([...MockEmployees]);
+    }, []),
   );
 
   return (
