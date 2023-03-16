@@ -116,8 +116,10 @@ export function EditEmployee() {
           <Input
             label="CPF"
             isEmpty={!!document}
-            value={maskCPF(document)}
-            onChangeText={setDocument}
+            value={document}
+            onChangeText={value => {
+              setDocument(maskCPF(value));
+            }}
             keyboardType="number-pad"
             maxLength={14}
           />
@@ -133,8 +135,10 @@ export function EditEmployee() {
           <Input
             label="Telefone"
             isEmpty={!!phone}
-            value={maskPhoneNumber(phone)}
-            onChangeText={setPhone}
+            value={phone}
+            onChangeText={value => {
+              setPhone(maskPhoneNumber(value));
+            }}
             keyboardType="number-pad"
             maxLength={16}
           />
@@ -142,8 +146,10 @@ export function EditEmployee() {
           <Input
             label="Nascimento"
             isEmpty={!!birthDate}
-            value={maskDate(birthDate)}
-            onChangeText={setBirthDate}
+            value={birthDate}
+            onChangeText={value => {
+              setBirthDate(maskDate(value));
+            }}
             keyboardType="number-pad"
             maxLength={10}
           />
@@ -161,8 +167,10 @@ export function EditEmployee() {
             <Input
               label="Contratação"
               isEmpty={!!createdAt}
-              value={maskDate(createdAt)}
-              onChangeText={setCreatedAt}
+              value={createdAt}
+              onChangeText={value => {
+                setCreatedAt(maskDate(value));
+              }}
               keyboardType="number-pad"
               maxLength={10}
             />
