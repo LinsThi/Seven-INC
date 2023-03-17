@@ -45,13 +45,10 @@ export const ItemInfo = styled.View`
   margin: 0 ${ms(20)}px;
 `;
 
-export const NameEmployee = styled.Text`
+export const NameEmployee = styled.Text.attrs({ numberOfLines: 1 })`
   font-size: ${RFValue(22)}px;
-  font-weight: bold;
-`;
-
-export const InfoEmployee = styled.Text`
-  font-size: ${RFValue(20)}px;
+  font-family: ${({ theme }) => theme.FONTS.INTER_BOLD};
+  width: ${RFValue(250)}px;
 `;
 
 export const TextInfoMore = styled.Text`
