@@ -1,12 +1,14 @@
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback } from 'react';
+import { useForm } from 'react-hook-form';
 import { useTheme } from 'styled-components/native';
 
-import { Input } from '~/components/Input';
+import { ControlledInput } from '~/components/Form/InputControlled';
+import { showToastSucess } from '~/components/Toast';
 
 import { EmployeesProps } from '~/DTOS/employees';
 import MockEmployees from '~/mock/employees';
-import { maskDate, maskCPF, maskPhoneNumber } from '~/utils/maskInput';
+import { isBeforeToday } from '~/utils/functionsDate';
 
 import * as Sty from './styles';
 
@@ -15,6 +17,16 @@ type PropsParams = RouteProp<
   'params'
 >;
 
+type FormData = {
+  name: string;
+  document: string;
+  email: string;
+  phone: string;
+  birthDate: string;
+  salary: string;
+  createdAt: string;
+};
+
 export function EditEmployee() {
   const { COLORS } = useTheme();
   const { goBack, navigate } = useNavigation();
@@ -22,77 +34,87 @@ export function EditEmployee() {
   const route = useRoute<PropsParams>();
   const { params } = route;
 
-  const [name, setName] = useState(params?.currentEmployee?.name || '');
-  const [document, setDocument] = useState(
-    params?.currentEmployee?.document || '',
+  const {
+    control,
+    handleSubmit,
+    formState: { isDirty, isValid, errors },
+  } = useForm<FormData>({
+    defaultValues: {
+      name: params?.currentEmployee?.name || '',
+      document: params?.currentEmployee?.document || '',
+      email: params?.currentEmployee?.email || '',
+      phone: params?.currentEmployee?.phone || '',
+      birthDate: params?.currentEmployee?.birth_date || '',
+      salary: params?.currentEmployee?.salary || '',
+      createdAt: params?.currentEmployee?.created_at || '',
+    },
+  });
+
+  const handleAddEmployee = useCallback(
+    (data: FormData) => {
+      const { name, document, email, phone, birthDate, salary, createdAt } =
+        data;
+
+      const newEmployeeInfo: EmployeesProps = {
+        id: Number(params?.currentEmployee?.id),
+        name,
+        document,
+        email,
+        phone,
+        birth_date: birthDate,
+        salary,
+        created_at: createdAt,
+      };
+
+      MockEmployees.push(newEmployeeInfo);
+
+      showToastSucess('Funcionário cadastrado com sucesso!', name, () =>
+        navigate('Home'),
+      );
+    },
+    [params?.currentEmployee?.id, navigate],
   );
-  const [email, setEmail] = useState(params?.currentEmployee?.email || '');
-  const [phone, setPhone] = useState(params?.currentEmployee?.phone || '');
-  const [birthDate, setBirthDate] = useState(
-    params?.currentEmployee?.birth_date || '',
+
+  const handleUpdateEmployee = useCallback(
+    (data: FormData) => {
+      const { name, document, email, phone, birthDate, salary, createdAt } =
+        data;
+      const idExployee = Number(params?.currentEmployee?.id);
+
+      const updatedEmployeeInfo: EmployeesProps = {
+        id: idExployee,
+        name,
+        document,
+        email,
+        phone,
+        birth_date: birthDate,
+        salary,
+        created_at: createdAt,
+      };
+
+      const indextUpdate = MockEmployees.findIndex(
+        currentEmployee => currentEmployee.id === idExployee,
+      );
+
+      MockEmployees[indextUpdate] = updatedEmployeeInfo;
+
+      showToastSucess('Funcionário atualizado com sucesso!', name, () =>
+        navigate('Home'),
+      );
+    },
+    [params?.currentEmployee?.id, navigate],
   );
-  const [salary, setSalary] = useState(params?.currentEmployee?.salary || '');
-  const [createdAt, setCreatedAt] = useState(
-    params?.currentEmployee?.created_at || '',
+
+  const handleSubmitAction = useCallback(
+    (data: FormData) => {
+      if (params?.currentEmployee) {
+        return handleUpdateEmployee(data);
+      }
+
+      return handleAddEmployee(data);
+    },
+    [handleAddEmployee, handleUpdateEmployee, params?.currentEmployee],
   );
-
-  const handleAddEmployee = useCallback(() => {
-    const newEmployeeInfo: EmployeesProps = {
-      id: Number(params?.currentEmployee?.id),
-      name,
-      document,
-      email,
-      phone,
-      birth_date: birthDate,
-      salary,
-      created_at: createdAt,
-    };
-
-    MockEmployees.push(newEmployeeInfo);
-    navigate('Home');
-  }, [
-    params?.currentEmployee?.id,
-    name,
-    document,
-    email,
-    phone,
-    birthDate,
-    salary,
-    createdAt,
-    navigate,
-  ]);
-
-  const handleUpdateEmployee = useCallback(() => {
-    const idExployee = Number(params.currentEmployee?.id);
-
-    const updatedEmployeeInfo: EmployeesProps = {
-      id: idExployee,
-      name,
-      document,
-      email,
-      phone,
-      birth_date: birthDate,
-      salary,
-      created_at: createdAt,
-    };
-
-    const indextUpdate = MockEmployees.findIndex(
-      currentEmployee => currentEmployee.id === idExployee,
-    );
-
-    MockEmployees[indextUpdate] = updatedEmployeeInfo;
-    navigate('Home');
-  }, [
-    params?.currentEmployee?.id,
-    name,
-    document,
-    email,
-    phone,
-    birthDate,
-    salary,
-    createdAt,
-    navigate,
-  ]);
 
   return (
     <Sty.Container>
@@ -106,73 +128,111 @@ export function EditEmployee() {
 
       <Sty.Content>
         <Sty.Form>
-          <Input
+          <ControlledInput
+            control={control}
+            name="name"
             label="Nome"
-            isEmpty={!!name}
-            value={name}
-            onChangeText={setName}
+            errorMessage={errors?.name?.message}
+            rules={{
+              required: 'Nome inválido',
+            }}
           />
 
-          <Input
+          <ControlledInput
+            control={control}
+            name="document"
             label="CPF"
-            isEmpty={!!document}
-            value={document}
-            onChangeText={value => {
-              setDocument(maskCPF(value));
-            }}
+            errorMessage={errors?.document?.message}
             keyboardType="number-pad"
+            mask="CPF"
             maxLength={14}
-          />
-
-          <Input
-            label="E-mail"
-            isEmpty={!!email}
-            value={email}
-            onChangeText={setEmail}
-            keyboardType="email-address"
-          />
-
-          <Input
-            label="Telefone"
-            isEmpty={!!phone}
-            value={phone}
-            onChangeText={value => {
-              setPhone(maskPhoneNumber(value));
+            rules={{
+              required: 'Insira um CPF',
+              minLength: {
+                value: 14,
+                message: 'CPF inválido',
+              },
             }}
+          />
+
+          <ControlledInput
+            control={control}
+            name="email"
+            label="E-mail"
+            errorMessage={errors?.email?.message}
+            keyboardType="email-address"
+            rules={{
+              required: 'Insira um E-mail',
+              pattern: {
+                value: /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i,
+                message: 'E-mail inválido',
+              },
+            }}
+          />
+
+          <ControlledInput
+            control={control}
+            name="phone"
+            label="Telefone"
+            errorMessage={errors?.phone?.message}
+            mask="phone"
             keyboardType="number-pad"
             maxLength={16}
+            rules={{
+              required: 'Insira um telefone válido',
+              minLength: {
+                value: 16,
+                message: 'Telefone inválido',
+              },
+            }}
           />
 
-          <Input
-            label="Nascimento"
-            isEmpty={!!birthDate}
-            value={birthDate}
-            onChangeText={value => {
-              setBirthDate(maskDate(value));
-            }}
+          <ControlledInput
+            control={control}
+            name="birthDate"
+            label="Data de nascimento"
+            errorMessage={errors?.birthDate?.message}
             keyboardType="number-pad"
+            mask="date"
             maxLength={10}
+            rules={{
+              required: 'Insira uma data de nascimento válida',
+              minLength: {
+                value: 10,
+                message: 'Data de nascimento inválida',
+              },
+            }}
           />
 
           <Sty.TwiceInputs>
-            <Input
+            <ControlledInput
+              control={control}
+              name="salary"
               label="Salário"
-              isEmpty={!!salary}
-              value={salary}
-              onChangeText={setSalary}
+              errorMessage={errors?.salary?.message}
               keyboardType="number-pad"
               style={{ width: '80%' }}
+              rules={{
+                required: 'Insira um valor válido',
+              }}
             />
 
-            <Input
+            <ControlledInput
+              control={control}
+              name="createdAt"
               label="Contratação"
-              isEmpty={!!createdAt}
-              value={createdAt}
-              onChangeText={value => {
-                setCreatedAt(maskDate(value));
-              }}
+              errorMessage={errors?.createdAt?.message}
               keyboardType="number-pad"
+              mask="date"
               maxLength={10}
+              rules={{
+                required: 'Insira um data válida',
+                minLength: {
+                  value: 10,
+                  message: 'Data inválida',
+                },
+                validate: value => isBeforeToday(value) || 'Data inválida',
+              }}
             />
           </Sty.TwiceInputs>
 
@@ -180,11 +240,8 @@ export function EditEmployee() {
             title={params?.currentEmployee ? 'Atualizar' : 'Cadastrar'}
             titleColor="white"
             titleBold
-            onPress={
-              params?.currentEmployee
-                ? () => handleUpdateEmployee()
-                : () => handleAddEmployee()
-            }
+            onPress={handleSubmit(handleSubmitAction)}
+            disabledFull={!isDirty || !isValid}
           />
         </Sty.Form>
       </Sty.Content>
