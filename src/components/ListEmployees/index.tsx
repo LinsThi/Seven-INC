@@ -47,13 +47,31 @@ export function ListEmployees({
     setVisibleModal(prev => !prev);
   };
 
+  const removeEmployee = useCallback(() => {
+    handleRemoveEmployee(expandedItem);
+
+    handleChangeVisibleModal();
+  }, [expandedItem, handleRemoveEmployee]);
+
   return (
     <Sty.Container>
       <ModalRemove
         visibleModal={visibleModal}
         handleChangeVisibleModal={handleChangeVisibleModal}
-        employeeInfo={expandedItem}
-        handleRemoveEmployee={handleRemoveEmployee}
+        title="Remover funcionário"
+        description={`Você confirma que deseja remover o funcionário ${expandedItem.name}?`}
+        buttonProps={[
+          {
+            title: 'Cancelar',
+            backgrounButton: 'MAIN',
+            onPress: () => handleChangeVisibleModal(),
+          },
+          {
+            title: 'Confirmar',
+            backgrounButton: 'RED',
+            onPress: () => removeEmployee(),
+          },
+        ]}
       />
 
       <Sty.Flatlist

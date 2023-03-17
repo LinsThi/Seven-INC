@@ -21,11 +21,11 @@ export const Content = styled.View`
 
 export const Title = styled.Text`
   font-size: ${RFValue(16)}px;
-  font-weight: bold;
+  font-family: ${({ theme }) => theme.FONTS.INTER_BOLD};
 `;
 
 export const Description = styled.Text`
   font-size: ${RFValue(14)}px;
   color: #8d8d8d;
-  font-weight: bold;
+  font-family: ${({ theme }) => theme.FONTS.INTER_BOLD};
 `;

@@ -50,9 +50,9 @@ export function CardEmployee({
           <Sty.NameEmployee>{item.name}</Sty.NameEmployee>
 
           {isExpanded ? (
-            <Sty.Icon name="arrow-up" size={30} color={COLORS.MAIN} />
+            <Sty.Icon name="arrow-up" size={30} color={COLORS.BLACK} />
           ) : (
-            <Sty.Icon name="arrow-down" size={30} color={COLORS.MAIN} />
+            <Sty.Icon name="arrow-down" size={30} color={COLORS.BLACK} />
           )}
         </Sty.ContainerEmployeeInfo>
 
@@ -78,11 +78,15 @@ export function CardEmployee({
 
             <Sty.ContainerButtons>
               <Sty.Button onPress={handleNavigateEditEmployeeScreen}>
-                <Sty.Icon name="pencil-box" size={30} color="green" />
+                <Sty.Icon
+                  name="square-edit-outline"
+                  size={30}
+                  color={COLORS.BLACK}
+                />
               </Sty.Button>
 
               <Sty.Button onPress={handleChangeVisibleModal}>
-                <Sty.Icon name="trash-can-outline" size={30} color="red" />
+                <Sty.Icon name="trash-can" size={30} color={COLORS.BLACK} />
               </Sty.Button>
             </Sty.ContainerButtons>
           </>

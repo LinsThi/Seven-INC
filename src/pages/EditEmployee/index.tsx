@@ -1,9 +1,10 @@
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTheme } from 'styled-components/native';
 
 import { ControlledInput } from '~/components/Form/InputControlled';
+import { ModalRemove } from '~/components/ModalRemove';
 import { showToastSucess } from '~/components/Toast';
 
 import { EmployeesProps } from '~/DTOS/employees';
@@ -30,6 +31,8 @@ type FormData = {
 export function EditEmployee() {
   const { COLORS } = useTheme();
   const { goBack, navigate } = useNavigation();
+  const [visibleModal, setVisibleModal] = useState(false);
+  const [disableButton, setDisableButton] = useState(false);
 
   const route = useRoute<PropsParams>();
   const { params } = route;
@@ -50,8 +53,14 @@ export function EditEmployee() {
     },
   });
 
+  const handleChangeVisibleModal = () => {
+    setVisibleModal(prev => !prev);
+  };
+
   const handleAddEmployee = useCallback(
     (data: FormData) => {
+      setDisableButton(true);
+
       const { name, document, email, phone, birthDate, salary, createdAt } =
         data;
 
@@ -77,6 +86,8 @@ export function EditEmployee() {
 
   const handleUpdateEmployee = useCallback(
     (data: FormData) => {
+      setDisableButton(true);
+
       const { name, document, email, phone, birthDate, salary, createdAt } =
         data;
       const idExployee = Number(params?.currentEmployee?.id);
@@ -116,10 +127,18 @@ export function EditEmployee() {
     [handleAddEmployee, handleUpdateEmployee, params?.currentEmployee],
   );
 
+  const returnLastPage = useCallback(() => {
+    if (!isDirty) {
+      return goBack();
+    }
+
+    return handleChangeVisibleModal();
+  }, [goBack, isDirty]);
+
   return (
     <Sty.Container>
       <Sty.ContainerHeader>
-        <Sty.Button onPress={() => goBack()}>
+        <Sty.Button onPress={returnLastPage}>
           <Sty.Icon name="arrow-left" size={30} color={COLORS.WHITE} />
         </Sty.Button>
 
@@ -237,14 +256,31 @@ export function EditEmployee() {
           </Sty.TwiceInputs>
 
           <Sty.ButtonConfirm
-            title={params?.currentEmployee ? 'Atualizar' : 'Cadastrar'}
-            titleColor="white"
-            titleBold
+            title={
+              params?.currentEmployee
+                ? 'Atualizar funcionário'
+                : 'Cadastrar funcionário'
+            }
             onPress={handleSubmit(handleSubmitAction)}
-            disabledFull={!isDirty || !isValid}
+            disabledFull={!isDirty || !isValid || disableButton}
           />
         </Sty.Form>
       </Sty.Content>
+
+      <ModalRemove
+        title="Existem alterações não salvas"
+        description="Tem certeza de que deseja sair?"
+        buttonProps={[
+          {
+            title: 'Ficar',
+            backgrounButton: 'GREEN',
+            onPress: () => handleChangeVisibleModal(),
+          },
+          { title: 'Sair', backgrounButton: 'RED', onPress: () => goBack() },
+        ]}
+        visibleModal={visibleModal}
+        handleChangeVisibleModal={handleChangeVisibleModal}
+      />
     </Sty.Container>
   );
 }

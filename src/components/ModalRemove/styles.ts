@@ -1,6 +1,7 @@
-import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
-import { vs } from 'react-native-size-matters';
+import { RFValue } from 'react-native-responsive-fontsize';
+import { ms, vs } from 'react-native-size-matters';
 import styled from 'styled-components/native';
+
 import { Button } from '../Button';
 import MaterialComunityIcon, { IconProps } from '../IconMaterialComunity';
 
@@ -29,20 +30,17 @@ export const ContainerButton = styled.View`
 `;
 
 export const Title = styled.Text`
-  font-size: ${RFValue(28)}px;
-  font-weight: bold;
+  font-size: ${RFValue(22)}px;
+  font-family: ${({ theme }) => theme.FONTS.INTER_BOLD};
   text-align: center;
 `;
 
 export const TextInfo = styled.Text`
-  font-size: ${RFValue(20)}px;
+  font-size: ${RFValue(16)}px;
+  font-family: ${({ theme }) => theme.FONTS.INTER_REGULAR};
   text-align: center;
 
-  margin: 0 ${RFValue(25)}px;
-`;
-
-export const TextBold = styled.Text`
-  font-weight: bold;
+  margin: ${vs(5)}px ${ms(25)}px;
 `;
 
 export const ButtonModal = styled(Button)`
@@ -56,7 +54,5 @@ export const ButtonClose = styled.TouchableOpacity`
 `;
 
 export const Icon = styled(MaterialComunityIcon).attrs<IconProps>(
-  ({ name, color, size }) => ({ name, color: color, size: RFValue(size) }),
-)`
-  background-color: white;
-`;
+  ({ name, color, size }) => ({ name, color, size: RFValue(size) }),
+)``;

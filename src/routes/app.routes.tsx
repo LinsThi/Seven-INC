@@ -1,12 +1,11 @@
-import { Platform, StatusBar, KeyboardAvoidingView } from 'react-native';
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { ThemeProvider } from 'styled-components';
+import { Platform, StatusBar, KeyboardAvoidingView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { ThemeProvider } from 'styled-components';
 
 import { EditEmployee } from '~/pages/EditEmployee';
 import { Home } from '~/pages/Home';
-
 import theme from '~/styles/theme';
 
 const { Navigator, Screen } = createStackNavigator();
@@ -26,7 +25,10 @@ export default function AppRoutes() {
       style={{ flex: 1 }}
     >
       <SafeAreaView style={{ flex: 1 }}>
-        <StatusBar barStyle="light-content" backgroundColor="#292929" />
+        <StatusBar
+          barStyle="light-content"
+          backgroundColor={theme.COLORS.MAIN}
+        />
 
         <ThemeProvider theme={theme}>
           <NavigationContainer theme={navTheme}>

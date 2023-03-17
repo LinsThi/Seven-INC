@@ -2,10 +2,10 @@ import { RFValue } from 'react-native-responsive-fontsize';
 import { ms, vs } from 'react-native-size-matters';
 import styled from 'styled-components/native';
 
+import { Button as Btn } from '~/components/Button';
 import MaterialComunityIcon, {
   IconProps,
 } from '~/components/IconMaterialComunity';
-import { Button as Btn } from '~/components/Button';
 
 export const Container = styled.View`
   flex: 1;
@@ -21,7 +21,7 @@ export const ContainerHeader = styled.View`
 export const Content = styled.ScrollView.attrs({
   showsVerticalScrollIndicator: false,
 })`
-  margin-top: ${vs(20)}px;
+  margin-top: ${vs(40)}px;
 `;
 
 export const Form = styled.View`
@@ -35,7 +35,7 @@ export const TwiceInputs = styled.View`
 
 export const Title = styled.Text`
   font-size: ${RFValue(25)}px;
-  font-weight: bold;
+  font-family: ${({ theme }) => theme.FONTS.INTER_BOLD};
   color: ${({ theme }) => theme.COLORS.WHITE};
 
   margin-left: ${ms(10)}px;
@@ -45,8 +45,9 @@ export const Button = styled.TouchableOpacity``;
 
 export const ButtonConfirm = styled(Btn)`
   margin: ${vs(10)}px 0 ${vs(30)}px;
+  border-radius: ${RFValue(5)}px;
 `;
 
 export const Icon = styled(MaterialComunityIcon).attrs<IconProps>(
-  ({ name, color, size }) => ({ name, color: color, size: RFValue(size) }),
+  ({ name, color, size }) => ({ name, color, size: RFValue(size) }),
 )``;

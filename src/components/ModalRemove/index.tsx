@@ -1,30 +1,31 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { Modal } from 'react-native';
 import { useTheme } from 'styled-components/native';
-import { EmployeesProps } from '~/DTOS/employees';
 
 import * as Sty from './styles';
 
+interface ButtonOptionType {
+  title: string;
+  onPress: () => void;
+  backgrounButton: 'MAIN' | 'GREEN' | 'RED';
+}
+
 type Props = {
-  employeeInfo: EmployeesProps;
   visibleModal: boolean;
   handleChangeVisibleModal: () => void;
-  handleRemoveEmployee: (employeeInfo: EmployeesProps) => void;
+  title: string;
+  description: string;
+  buttonProps: ButtonOptionType[];
 };
 
 export function ModalRemove({
-  employeeInfo,
   handleChangeVisibleModal,
+  title,
+  description,
   visibleModal,
-  handleRemoveEmployee,
+  buttonProps,
 }: Props) {
   const { COLORS } = useTheme();
-
-  const removeEmployee = useCallback(() => {
-    handleRemoveEmployee(employeeInfo);
-
-    handleChangeVisibleModal();
-  }, [employeeInfo]);
 
   return (
     <Modal
@@ -38,29 +39,20 @@ export function ModalRemove({
           <Sty.ButtonClose onPress={handleChangeVisibleModal}>
             <Sty.Icon name="close" size={30} color="gray" />
           </Sty.ButtonClose>
-          <Sty.Title>Remover funcionário</Sty.Title>
+          <Sty.Title>{title}</Sty.Title>
 
-          <Sty.TextInfo>
-            Você confirmar que deseja remover o funcionário{' '}
-            <Sty.TextBold>{employeeInfo.name}</Sty.TextBold> ?
-          </Sty.TextInfo>
+          <Sty.TextInfo>{description}</Sty.TextInfo>
 
           <Sty.ContainerButton>
-            <Sty.ButtonModal
-              title="Cancelar"
-              style={{ backgroundColor: COLORS.BG_BUTTON_CANCEL }}
-              titleColor="white"
-              titleBold
-              onPress={handleChangeVisibleModal}
-            />
-
-            <Sty.ButtonModal
-              title="Confirmar"
-              style={{ backgroundColor: COLORS.BG_BUTTON_CONFIRM }}
-              titleBold
-              titleColor="white"
-              onPress={removeEmployee}
-            />
+            {buttonProps.map(currentButton => (
+              <Sty.ButtonModal
+                title={currentButton.title}
+                style={{
+                  backgroundColor: COLORS[currentButton.backgrounButton],
+                }}
+                onPress={currentButton.onPress}
+              />
+            ))}
           </Sty.ContainerButton>
         </Sty.Content>
       </Sty.Container>

@@ -24,7 +24,7 @@ export const ContainerLabel = styled(Animated.View)<InputTextProps>`
 export const TextLabel = styled(Animated.Text)<InputTextProps>`
   font-size: ${({ isFocused, isEmpty }) =>
     isFocused || isEmpty ? RFValue(16) : RFValue(20)}px;
-  font-weight: bold;
+  font-family: ${({ theme }) => theme.FONTS.INTER_BOLD};
   color: ${({ theme }) => theme.COLORS.COLOR_LABEL_INPUT};
 
   ${props =>
@@ -46,4 +46,5 @@ export const Input = styled(TextInput)<InputTextProps>`
   padding: ${ms(15)}px;
   padding-left: 10px;
   font-size: ${vs(15)}px;
+  font-family: ${({ theme }) => theme.FONTS.INTER_REGULAR};
 `;

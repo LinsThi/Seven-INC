@@ -1,9 +1,11 @@
 import { ComponentType } from 'react';
 import { FlatList } from 'react-native';
-import styled from 'styled-components/native';
-import { EmployeesProps } from '~/DTOS/employees';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { vs, ms } from 'react-native-size-matters';
+import styled from 'styled-components/native';
+
+import { EmployeesProps } from '~/DTOS/employees';
+
 import MaterialComunityIcon, { IconProps } from '../IconMaterialComunity';
 
 type ContainerItemProps = {
@@ -17,7 +19,7 @@ export const Container = styled.View`
 `;
 
 export const ContainerItem = styled.TouchableOpacity<ContainerItemProps>`
-  height: ${({ isExpanded }) => (isExpanded ? vs(195) : vs(96))}px;
+  height: ${({ isExpanded }) => (isExpanded ? vs(215) : vs(96))}px;
   background-color: #dcdcdc;
   margin-bottom: ${RFValue(15)}px;
   padding: ${vs(15)}px ${ms(5)}px;
@@ -34,13 +36,13 @@ export const ContainerEmployeeInfo = styled.View`
 
 export const ContainerButtons = styled.View`
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: flex-start;
   margin-top: ${vs(10)}px;
 `;
 
 export const ItemInfo = styled.View`
   flex: 1;
-  margin-left: ${ms(10)}px;
+  margin: 0 ${ms(20)}px;
 `;
 
 export const NameEmployee = styled.Text`
@@ -54,18 +56,23 @@ export const InfoEmployee = styled.Text`
 
 export const TextInfoMore = styled.Text`
   font-size: ${RFValue(18)}px;
-  color: ${({ theme }) => theme.COLORS.GRAY};
+  font-family: ${({ theme }) => theme.FONTS.INTER_REGULAR};
+  color: ${({ theme }) => theme.COLORS.BLACK};
+  margin-top: ${vs(5)}px;
 `;
 
 export const HighlightedText = styled.Text`
-  font-weight: bold;
+  color: ${({ theme }) => theme.COLORS.BLACK};
+  font-family: ${({ theme }) => theme.FONTS.INTER_BOLD};
 `;
 
 export const Icon = styled(MaterialComunityIcon).attrs<IconProps>(
-  ({ name, color, size }) => ({ name, color: color, size: RFValue(size) }),
+  ({ name, color, size }) => ({ name, color, size: RFValue(size) }),
 )``;
 
-export const Button = styled.TouchableOpacity``;
+export const Button = styled.TouchableOpacity`
+  margin-right: ${ms(20)}px;
+`;
 
 export const Flatlist = styled.FlatList`
   width: 100%;
