@@ -42,7 +42,7 @@ export function Input({
             {
               translateY: focusAnimation.interpolate({
                 inputRange: [0, 1],
-                outputRange: [vs(33), vs(-5)],
+                outputRange: [vs(29), vs(-6)],
               }),
             },
           ],

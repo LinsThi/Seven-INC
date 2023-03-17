@@ -9,7 +9,7 @@ import { showToastSucess } from '~/components/Toast';
 
 import { EmployeesProps } from '~/DTOS/employees';
 import MockEmployees from '~/mock/employees';
-import { isBeforeToday } from '~/utils/functionsDate';
+import { isBeforeToday, isBiggerThan16 } from '~/utils/functionsDate';
 
 import * as Sty from './styles';
 
@@ -40,7 +40,7 @@ export function EditEmployee() {
   const {
     control,
     handleSubmit,
-    formState: { isDirty, isValid, errors },
+    formState: { isDirty, errors },
   } = useForm<FormData>({
     defaultValues: {
       name: params?.currentEmployee?.name || '',
@@ -220,6 +220,14 @@ export function EditEmployee() {
                 value: 10,
                 message: 'Data de nascimento inválida',
               },
+              pattern: {
+                value:
+                  /^(((0[1-9]|[12][0-9]|30)[-/]?(0[13-9]|1[012])|31[-/]?(0[13578]|1[02])|(0[1-9]|1[0-9]|2[0-8])[-/]?02)[-/]?[0-9]{4}|29[-/]?02[-/]?([0-9]{2}(([2468][048]|[02468][48])|[13579][26])|([13579][26]|[02468][048]|0[0-9]|1[0-6])00))$/i,
+                message: 'Data inválida',
+              },
+              validate: value =>
+                isBiggerThan16(value) ||
+                'Empregado não pode ter menos de 16 anos',
             }}
           />
 
@@ -250,6 +258,11 @@ export function EditEmployee() {
                   value: 10,
                   message: 'Data inválida',
                 },
+                pattern: {
+                  value:
+                    /^(((0[1-9]|[12][0-9]|30)[-/]?(0[13-9]|1[012])|31[-/]?(0[13578]|1[02])|(0[1-9]|1[0-9]|2[0-8])[-/]?02)[-/]?[0-9]{4}|29[-/]?02[-/]?([0-9]{2}(([2468][048]|[02468][48])|[13579][26])|([13579][26]|[02468][048]|0[0-9]|1[0-6])00))$/i,
+                  message: 'Data inválida',
+                },
                 validate: value => isBeforeToday(value) || 'Data inválida',
               }}
             />
@@ -262,7 +275,7 @@ export function EditEmployee() {
                 : 'Cadastrar funcionário'
             }
             onPress={handleSubmit(handleSubmitAction)}
-            disabledFull={!isDirty || !isValid || disableButton}
+            disabledFull={!isDirty || disableButton}
           />
         </Sty.Form>
       </Sty.Content>

@@ -19,7 +19,7 @@ export const Container = styled.View`
 `;
 
 export const ContainerItem = styled.TouchableOpacity<ContainerItemProps>`
-  height: ${({ isExpanded }) => (isExpanded ? vs(215) : vs(96))}px;
+  height: ${({ isExpanded }) => (isExpanded ? vs(240) : vs(96))}px;
   background-color: #dcdcdc;
   margin-bottom: ${RFValue(15)}px;
   padding: ${vs(15)}px ${ms(5)}px;
@@ -51,7 +51,7 @@ export const NameEmployee = styled.Text.attrs({ numberOfLines: 1 })`
   width: ${RFValue(250)}px;
 `;
 
-export const TextInfoMore = styled.Text`
+export const TextInfoMore = styled.Text.attrs({ numberOfLines: 1 })`
   font-size: ${RFValue(18)}px;
   font-family: ${({ theme }) => theme.FONTS.INTER_REGULAR};
   color: ${({ theme }) => theme.COLORS.BLACK};

@@ -1,5 +1,6 @@
 import { TextInput, TextInputProps } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
+import { vs } from 'react-native-size-matters';
 import styled from 'styled-components/native';
 
 import MaterialComunityIcon, { IconProps } from '../IconMaterialComunity';
@@ -13,7 +14,7 @@ export const Container = styled.View`
 `;
 
 export const Icon = styled(MaterialComunityIcon).attrs<IconProps>(
-  ({ name, color, size }) => ({ name, color, size }),
+  ({ name, color, size }) => ({ name, color, size: vs(size) }),
 )``;
 
 export const Input = styled(TextInput).attrs<TextInputProps>(({ theme }) => ({
