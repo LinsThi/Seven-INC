@@ -55,10 +55,9 @@ export function Input({
       <Sty.Input
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
-        selectionColor={COLORS.RED}
         isFocused={isFocused}
         isEmpty={isEmpty}
-        cursorColor={COLORS.BLACK}
+        selectionColor={COLORS.BLACK}
         {...rest}
       />
 
