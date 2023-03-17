@@ -37,7 +37,7 @@ export function ModalRemove({
       <Sty.Container>
         <Sty.Content>
           <Sty.ButtonClose onPress={handleChangeVisibleModal}>
-            <Sty.Icon name="close" size={30} color="gray" />
+            <Sty.Icon name="close" size={30} color={COLORS.GRAY} />
           </Sty.ButtonClose>
           <Sty.Title>{title}</Sty.Title>
 
@@ -46,6 +46,7 @@ export function ModalRemove({
           <Sty.ContainerButton>
             {buttonProps.map(currentButton => (
               <Sty.ButtonModal
+                key={currentButton.title}
                 title={currentButton.title}
                 style={{
                   backgroundColor: COLORS[currentButton.backgrounButton],

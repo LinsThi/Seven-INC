@@ -14,13 +14,8 @@ export const Container = styled(TouchableOpacity)<ButtonTextProps>`
   padding: ${RFValue(10)}px 0;
   border-radius: ${RFValue(15)}px;
 
-  background-color: ${({ theme }) => theme.COLORS.GREEN};
-
-  ${props =>
-    props.disableFull &&
-    css`
-      opacity: 0.5;
-    `}
+  background-color: ${({ disableFull, theme }) =>
+    disableFull ? theme.COLORS.LIGHT_GRAY : theme.COLORS.GREEN};
 `;
 
 export const TextButton = styled.Text<ButtonTextProps>`
