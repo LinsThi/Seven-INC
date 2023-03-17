@@ -13,7 +13,11 @@ export function SearchInput({ ...rest }: Props) {
     <Sty.Container>
       <Sty.Input placeholder="Busque um funcionário" {...rest} />
 
-      <Sty.Icon name="account-search" size={30} color={COLORS.LIGHT_GRAY} />
+      <Sty.Icon
+        name="account-search"
+        size={30}
+        color={COLORS.COLOR_LABEL_INPUT}
+      />
     </Sty.Container>
   );
 }

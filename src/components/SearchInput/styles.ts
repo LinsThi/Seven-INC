@@ -17,10 +17,10 @@ export const Icon = styled(MaterialComunityIcon).attrs<IconProps>(
 )``;
 
 export const Input = styled(TextInput).attrs<TextInputProps>(({ theme }) => ({
-  placeholderTextColor: theme.COLORS.LIGHT_GRAY,
+  placeholderTextColor: theme.COLORS.COLOR_LABEL_INPUT,
 }))`
   flex: 1;
-  color: ${({ theme }) => theme.COLORS.LIGHT_GRAY};
+  color: ${({ theme }) => theme.COLORS.COLOR_LABEL_INPUT};
   font-size: ${RFValue(15)}px;
   font-family: ${({ theme }) => theme.FONTS.INTER_BOLD};
 `;
