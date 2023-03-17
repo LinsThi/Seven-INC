@@ -25,11 +25,7 @@ const toastConfig = {
   ),
 };
 
-const showToastSucessAddProduct = (
-  title: string,
-  name: string,
-  handleNavigate: any,
-) => {
+const showToastSucess = (title: string, name: string, handleNavigate: any) => {
   Toast.show({
     type: 'employeeSucess',
     text1: title,
@@ -40,4 +36,4 @@ const showToastSucessAddProduct = (
   });
 };
 
-export { toastConfig, showToastSucessAddProduct };
+export { toastConfig, showToastSucess };

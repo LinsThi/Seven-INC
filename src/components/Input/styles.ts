@@ -10,7 +10,6 @@ type InputTextProps = {
 
 export const Container = styled.View`
   flex: 1;
-  overflow: visible;
   padding: ${vs(10)}px 0 0;
   margin-bottom: ${vs(10)}px;
 `;
@@ -33,6 +32,11 @@ export const TextLabel = styled(Animated.Text)<InputTextProps>`
     css`
       color: ${({ theme }) => theme.COLORS.WHITE};
     `};
+`;
+
+export const TextError = styled.Text`
+  color: ${({ theme }) => theme.COLORS.RED};
+  font-size: ${RFValue(15)}px;
 `;
 
 export const Input = styled(TextInput)<InputTextProps>`

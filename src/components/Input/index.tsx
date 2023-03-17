@@ -8,9 +8,15 @@ import * as Sty from './styles';
 export type InputProps = TextInputProps & {
   label: string;
   isEmpty?: boolean;
+  errorMessage?: string;
 };
 
-export function Input({ label, isEmpty = true, ...rest }: InputProps) {
+export function Input({
+  label,
+  isEmpty = true,
+  errorMessage = '',
+  ...rest
+}: InputProps) {
   const { COLORS } = useTheme();
 
   const [isFocused, setIsFocused] = useState(false);
@@ -55,6 +61,8 @@ export function Input({ label, isEmpty = true, ...rest }: InputProps) {
         cursorColor={COLORS.BLACK}
         {...rest}
       />
+
+      {errorMessage && <Sty.TextError>{errorMessage}</Sty.TextError>}
     </Sty.Container>
   );
 }
