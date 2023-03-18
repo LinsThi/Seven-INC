@@ -20,6 +20,9 @@ export const ContainerHeader = styled.View`
 
 export const Content = styled.ScrollView.attrs({
   showsVerticalScrollIndicator: false,
+  contentContainerStyle: {
+    paddingTop: vs(5),
+  },
 })`
   margin-top: ${vs(40)}px;
 `;
