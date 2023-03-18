@@ -28,12 +28,7 @@ export function ModalRemove({
   const { COLORS } = useTheme();
 
   return (
-    <Modal
-      visible={visibleModal}
-      animationType="fade"
-      transparent
-      statusBarTranslucent
-    >
+    <Modal visible={visibleModal} animationType="fade" statusBarTranslucent>
       <Sty.Container>
         <Sty.Content>
           <Sty.ButtonClose onPress={handleChangeVisibleModal}>
