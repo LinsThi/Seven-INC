@@ -1,10 +1,20 @@
 {
   "expo": {
-    "name": "desafio-grupo-seven",
+    "name": "DesafioGrupoSeven",
     "slug": "desafio-grupo-seven",
     "version": "1.0.0",
-    "assetBundlePatterns": [
-      "**/*"
-    ]
+    "assetBundlePatterns": ["**/*"],
+    "splash": {
+      "image": "./assetsExpo/splashscreen.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#222A51"
+    },
+    "icon": "./assetsExpo/icon.png",
+    "android": {
+      "adaptativeIcon": {
+        "foregroundImage": "./assetsExpo/icon.png",
+        "backgroundColor": "#222A51"
+      }
+    }
   }
 }
