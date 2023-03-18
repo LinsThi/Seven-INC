@@ -57,7 +57,7 @@ export function Input({
         onBlur={() => setIsFocused(false)}
         isFocused={isFocused}
         isEmpty={isEmpty}
-        selectionColor={COLORS.BLACK}
+        cursorColor={COLORS.BLACK}
         {...rest}
       />
 

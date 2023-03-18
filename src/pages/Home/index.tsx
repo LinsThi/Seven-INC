@@ -1,5 +1,5 @@
 import { useFocusEffect } from '@react-navigation/native';
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState, useEffect } from 'react';
 
 import { Header } from '~/components/Header';
 import { ListEmployees } from '~/components/ListEmployees';
@@ -12,6 +12,15 @@ import * as Sty from './styles';
 export function Home() {
   const [listRender, setListRender] = useState(MockEmployees);
   const [searchValue, setSearchValue] = useState('');
+  const [expandedItem, setExpandedItem] = useState<EmployeesProps>(
+    {} as EmployeesProps,
+  );
+
+  useEffect(() => {
+    if (searchValue !== '') {
+      setExpandedItem({} as EmployeesProps);
+    }
+  }, [searchValue]);
 
   const filteredData = useMemo(() => {
     return searchValue
@@ -59,6 +68,8 @@ export function Home() {
         <ListEmployees
           listRender={filteredData}
           handleRemoveEmployee={handleRemoveEmployee}
+          expandedItem={expandedItem}
+          setExpandedItem={setExpandedItem}
         />
       </Sty.Content>
     </Sty.Container>

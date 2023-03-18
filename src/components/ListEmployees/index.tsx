@@ -14,15 +14,16 @@ export type ItemListEmployeeProps = {
 type ListEmployessProps = {
   listRender: EmployeesProps[];
   handleRemoveEmployee: (employeeInfo: EmployeesProps) => void;
+  expandedItem: EmployeesProps;
+  setExpandedItem: (employee: EmployeesProps) => void;
 };
 
 export function ListEmployees({
   listRender,
   handleRemoveEmployee,
+  expandedItem,
+  setExpandedItem,
 }: ListEmployessProps) {
-  const [expandedItem, setExpandedItem] = useState<EmployeesProps>(
-    {} as EmployeesProps,
-  );
   const [visibleModal, setVisibleModal] = useState(false);
 
   const handleSetExpandedItems = useCallback(
@@ -33,7 +34,7 @@ export function ListEmployees({
 
       return setExpandedItem(selectedEmployee);
     },
-    [expandedItem],
+    [expandedItem.document, setExpandedItem],
   );
 
   const verifyIfItemExpanded = useCallback(

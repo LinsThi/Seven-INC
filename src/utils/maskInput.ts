@@ -22,7 +22,17 @@ export function maskDate(value: string) {
   return newValue;
 }
 
-export function verifyMask(value: string, mask: 'CPF' | 'phone' | 'date' | '') {
+export function maskNumber(value: string) {
+  let newValue = value;
+
+  newValue = newValue.replace(/\D/g, '');
+  return newValue;
+}
+
+export function verifyMask(
+  value: string,
+  mask: 'CPF' | 'phone' | 'date' | 'number' | '',
+) {
   if (mask === 'CPF') {
     return maskCPF(value);
   }
@@ -33,6 +43,10 @@ export function verifyMask(value: string, mask: 'CPF' | 'phone' | 'date' | '') {
 
   if (mask === 'date') {
     return maskDate(value);
+  }
+
+  if (mask === 'number') {
+    return maskNumber(value);
   }
 
   return value;

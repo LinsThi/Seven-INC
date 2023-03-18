@@ -9,7 +9,12 @@ import { showToastSucess } from '~/components/Toast';
 
 import { EmployeesProps } from '~/DTOS/employees';
 import MockEmployees from '~/mock/employees';
-import { isBeforeToday, isBiggerThan16 } from '~/utils/functionsDate';
+import {
+  dateCreatedAtAfterBirthDate,
+  isBeforeToday,
+  isBiggerThan16,
+  validYear,
+} from '~/utils/functionsDate';
 
 import * as Sty from './styles';
 
@@ -225,9 +230,12 @@ export function EditEmployee() {
                   /^(((0[1-9]|[12][0-9]|30)[-/]?(0[13-9]|1[012])|31[-/]?(0[13578]|1[02])|(0[1-9]|1[0-9]|2[0-8])[-/]?02)[-/]?[0-9]{4}|29[-/]?02[-/]?([0-9]{2}(([2468][048]|[02468][48])|[13579][26])|([13579][26]|[02468][048]|0[0-9]|1[0-6])00))$/i,
                 message: 'Data inválida',
               },
-              validate: value =>
-                isBiggerThan16(value) ||
-                'Empregado não pode ter menos de 16 anos',
+              validate: {
+                valid: value => validYear(value) || 'Data inválida',
+                biggerThan16: value =>
+                  isBiggerThan16(value) ||
+                  'Empregado não pode ter menos de 16 anos',
+              },
             }}
           />
 
@@ -238,6 +246,7 @@ export function EditEmployee() {
               label="Salário"
               errorMessage={errors?.salary?.message}
               keyboardType="number-pad"
+              mask="number"
               style={{ width: '80%' }}
               rules={{
                 required: 'Insira um valor válido',
@@ -263,7 +272,12 @@ export function EditEmployee() {
                     /^(((0[1-9]|[12][0-9]|30)[-/]?(0[13-9]|1[012])|31[-/]?(0[13578]|1[02])|(0[1-9]|1[0-9]|2[0-8])[-/]?02)[-/]?[0-9]{4}|29[-/]?02[-/]?([0-9]{2}(([2468][048]|[02468][48])|[13579][26])|([13579][26]|[02468][048]|0[0-9]|1[0-6])00))$/i,
                   message: 'Data inválida',
                 },
-                validate: value => isBeforeToday(value) || 'Data inválida',
+                validate: {
+                  isBefore: value => isBeforeToday(value) || 'Data inválida',
+                  createdAtAfterBirthDate: (value, formValues) =>
+                    dateCreatedAtAfterBirthDate(value, formValues.birthDate) ||
+                    'Empregado não pode ter menos de 16 anos',
+                },
               }}
             />
           </Sty.TwiceInputs>

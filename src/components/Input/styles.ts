@@ -37,6 +37,7 @@ export const TextLabel = styled(Animated.Text)<InputTextProps>`
 export const TextError = styled.Text`
   color: ${({ theme }) => theme.COLORS.RED};
   font-size: ${RFValue(15)}px;
+  width: 90%;
 `;
 
 export const Input = styled(TextInput)<InputTextProps>`
